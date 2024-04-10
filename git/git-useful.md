@@ -2,17 +2,11 @@ See `git-github-reference.pdf`. It contains all the basic/intermediate informati
 
 Feel free to add here any useful advanced command you can think of git-related.
 
-
-
 It's possible to create new branches and moving onto them by using `git checkout -b branch-name`.
 
 To just create a new branch simply type `git branch branch-name`. This branch is going to be inserted in the current commit we're working on. We can switch on this new branch with `git checkout branch-name`.
 
-
-
 > When merging, the results will go on to the branch that we're currently working on!
-
-
 
 ## Branching Strategies (from easiest to hardest)
 
@@ -105,8 +99,6 @@ Okay maybe i'll try to explain git flow just because you could find it into big 
   
   - From the release branch when we corrected every bug we can merge into master.
 
-
-
 ### Real programmers commit to master
 
 While adding complexity to the git structure might seem a good idea to maintain things organized it actually does quite the opposite. The more the project become the more messy it gets. That's why we should follow the trunk based strategy.
@@ -163,8 +155,6 @@ If we just committing code into master won't that break a lot of stuff?
   
   - So, instead of deploying a new feature to everyone across all your environment, try to minimize it: Do it incrementally. We're gonna talk about some deployment techniques.
 
-
-
 #### Feature Toggles
 
 The concept is very easy. Let's say we have a webpage and we have a really boring grid to display some content. We are working towards changing that to a graph but that is going to take a day or perhaps longer. So we create a feature toggle! Sounds intimidating? Consider it as an if-else statement to keep it simple.
@@ -193,5 +183,40 @@ Maybe the UI calls a new endpoint on my API.
 > An endpoint is an access point into my API that can be reached through HTTP requests in order to perform specific operations such as sending and retrieving data. Endpoints can include operations like "retrieve a list of users" or "delete/update this specific user"
 
 Okay but if the UI isn't  visible it won't never call that endpoint right? Well, no. That endpoint will actually exist there. It will be exposed. Even if i'm not calling those endpoints, someone else might. We need to think about security as well! We want to put this endpoint as high as possible but don't forget about those publicly exposed layers.
+
+We're considering just a single change (table $\to$ graph), but usually we move and remove and add more stuff from a single webpage. Do i need 15 if else statements in my web page? Probably that's not a good idea.
+
+The best solution here is to just keep the old page and keep working on this new page in parallel with the existing one. 
+
+We use routing so that the original page route will just keep working and all user will be directed to the existing page and you as a team can start working on the new page. 
+
+Of course there will be some duplicated code there because you are copying the old page and start working on it but that's fine because its for a short period of time. 
+
+But now we can even add feature toggles to the mix! We can enable the new page for some pilot customer to get feedback.
+
+#### Implementing feature toggles
+
+A lot of companies build them themselves and there are several different frameworks around [dotnet](https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet)):
+
+- NFeature
+
+- FeatureToggle
+
+- FeatureSwitcher
+
+- ...
+
+Other solutions are SaaS services:
+
+- LaunchDarkly
+
+- Rollout.io
+
+- Split.io
+
+Instead of calling our own code to ask if the feature is available for the specific user we'll call the service instead.
+They also implement some useful functionalities instead of just answering yes or no!
+
+
 
 
